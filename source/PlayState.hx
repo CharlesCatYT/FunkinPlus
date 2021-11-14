@@ -252,12 +252,14 @@ class PlayState extends MusicBeatState
 
 					var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('philly/sky'));
 					bg.scrollFactor.set(0.1, 0.1);
+					bg.antialiasing = true;
 					add(bg);
 
 					var city:FlxSprite = new FlxSprite(-10).loadGraphic(Paths.image('philly/city'));
 					city.scrollFactor.set(0.3, 0.3);
 					city.setGraphicSize(Std.int(city.width * 0.85));
 					city.updateHitbox();
+					city.antialiasing = true;
 					add(city);
 
 					phillyCityLights = new FlxTypedGroup<FlxSprite>();
@@ -275,9 +277,11 @@ class PlayState extends MusicBeatState
 					}
 
 					var streetBehind:FlxSprite = new FlxSprite(-40, 50).loadGraphic(Paths.image('philly/behindTrain'));
+					streetBehind.antialiasing = true;
 					add(streetBehind);
 
 					phillyTrain = new FlxSprite(2000, 360).loadGraphic(Paths.image('philly/train'));
+					phillyTrain.antialiasing = true;
 					add(phillyTrain);
 
 					trainSound = new FlxSound().loadEmbedded(Paths.sound('train_passes'));
@@ -286,6 +290,7 @@ class PlayState extends MusicBeatState
 					// var cityLights:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.win0.png);
 
 					var street:FlxSprite = new FlxSprite(-40, streetBehind.y).loadGraphic(Paths.image('philly/street'));
+					street.antialiasing = true;
 					add(street);
 				}
 			case 'milf' | 'satin-panties' | 'high':
@@ -295,6 +300,7 @@ class PlayState extends MusicBeatState
 
 					var skyBG:FlxSprite = new FlxSprite(-120, -50).loadGraphic(Paths.image('limo/limoSunset'));
 					skyBG.scrollFactor.set(0.1, 0.1);
+					skyBG.antialiasing = true;
 					add(skyBG);
 
 					var bgLimo:FlxSprite = new FlxSprite(-200, 480);
@@ -302,6 +308,7 @@ class PlayState extends MusicBeatState
 					bgLimo.animation.addByPrefix('drive', "background limo pink", 24);
 					bgLimo.animation.play('drive');
 					bgLimo.scrollFactor.set(0.4, 0.4);
+					bgLimo.antialiasing = true;
 					add(bgLimo);
 
 					grpLimoDancers = new FlxTypedGroup<BackgroundDancer>();
@@ -316,6 +323,7 @@ class PlayState extends MusicBeatState
 
 					var overlayShit:FlxSprite = new FlxSprite(-500, -600).loadGraphic(Paths.image('limo/limoOverlay'));
 					overlayShit.alpha = 0.5;
+					overlayShit.antialiasing = true;
 					// add(overlayShit);
 
 					// var shaderBullshit = new BlendModeEffect(new OverlayShader(), FlxColor.RED);
@@ -333,6 +341,7 @@ class PlayState extends MusicBeatState
 					limo.antialiasing = true;
 
 					fastCar = new FlxSprite(-300, 160).loadGraphic(Paths.image('limo/fastCarLol'));
+					fastCar.antialiasing = true;
 					// add(limo);
 				}
 			case 'cocoa' | 'eggnog':

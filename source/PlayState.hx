@@ -934,9 +934,17 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
-			dad.dance();
-			gf.dance();
-			boyfriend.playAnim('idle');
+			// this just based on beatHit stuff but compact
+			if (swagCounter % gfSpeed == 0)
+				gf.dance();
+			if (swagCounter % 2 == 0)
+			{
+				if (!boyfriend.animation.curAnim.name.endsWith("miss"))
+					boyfriend.dance();
+				dad.dance();
+			}
+			else if (dad.curCharacter == 'spooky')
+				dad.dance();
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 			introAssets.set('default', ['ready', "set", "go"]);
@@ -1037,6 +1045,13 @@ class PlayState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
+
+		// have them all dance when the song starts
+		gf.dance();
+		if (!boyfriend.animation.curAnim.name.startsWith("sing"))
+			boyfriend.dance();
+		if (!dad.animation.curAnim.name.startsWith("sing"))
+			dad.dance();
 
 		#if desktop
 		// Song duration in a float, useful for the time left feature
@@ -2060,7 +2075,7 @@ class PlayState extends MusicBeatState
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
-				boyfriend.playAnim('idle');
+				boyfriend.dance();
 			}
 		}
 
@@ -2157,8 +2172,8 @@ class PlayState extends MusicBeatState
 		{
 			if (!note.isSustainNote)
 			{
-				popUpScore(note.strumTime);
 				combo += 1;
+				popUpScore(note.strumTime);
 			}
 
 			if (note.noteData >= 0)
@@ -2322,8 +2337,14 @@ class PlayState extends MusicBeatState
 			// else
 			// Conductor.changeBPM(SONG.bpm);
 
-			// Dad doesnt interupt his own notes
-			if (SONG.notes[Math.floor(curStep / 16)].mustHitSection)
+			if (curBeat % 2 == 0)
+			{
+				if (!dad.animation.curAnim.name.startsWith('sing'))
+					dad.dance();
+				if (!boyfriend.animation.curAnim.name.startsWith('sing'))
+					boyfriend.dance();
+			}
+			else if (dad.curCharacter == 'spooky' && !dad.animation.curAnim.name.startsWith('sing'))
 				dad.dance();
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
@@ -2351,11 +2372,6 @@ class PlayState extends MusicBeatState
 		if (curBeat % gfSpeed == 0)
 		{
 			gf.dance();
-		}
-
-		if (!boyfriend.animation.curAnim.name.startsWith("sing"))
-		{
-			boyfriend.playAnim('idle');
 		}
 
 		if (curBeat % 8 == 7 && curSong == 'Bopeebo')

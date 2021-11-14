@@ -1345,6 +1345,8 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		FlxG.camera.followLerp = CoolUtil.camLerpShit(0.04);
+
 		#if !debug
 		perfectMode = false;
 		#end
@@ -1409,8 +1411,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.50)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50)));
+		iconP1.setGraphicSize(Std.int(150 + 0.85 * (iconP1.width - 150)));
+		iconP2.setGraphicSize(Std.int(150 + 0.85 * (iconP2.width - 150)));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -1533,8 +1535,8 @@ class PlayState extends MusicBeatState
 
 		if (camZooming)
 		{
-			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
+			FlxG.camera.zoom = defaultCamZoom + 0.95 * (FlxG.camera.zoom - defaultCamZoom);
+			camHUD.zoom = 1 + 0.95 * (camHUD.zoom - 1);
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);
@@ -1545,7 +1547,7 @@ class PlayState extends MusicBeatState
 			switch (curBeat)
 			{
 				case 16:
-					camZooming = true;
+					// camZooming = true;
 					gfSpeed = 2;
 				case 48:
 					gfSpeed = 1;
@@ -1564,7 +1566,7 @@ class PlayState extends MusicBeatState
 			switch (curBeat)
 			{
 				case 128, 129, 130:
-					vocals.volume = 0;
+					// vocals.volume = 0;
 					// FlxG.sound.music.stop();
 					// FlxG.switchState(new PlayState());
 			}

@@ -82,10 +82,10 @@ class Note extends FlxSprite
 			default:
 				frames = Paths.getSparrowAtlas('NOTE_assets');
 
-				animation.addByPrefix('greenScroll', 'green0');
-				animation.addByPrefix('redScroll', 'red0');
-				animation.addByPrefix('blueScroll', 'blue0');
-				animation.addByPrefix('purpleScroll', 'purple0');
+				animation.addByPrefix('greenScroll', 'green instance');
+				animation.addByPrefix('redScroll', 'red instance');
+				animation.addByPrefix('blueScroll', 'blue instance');
+				animation.addByPrefix('purpleScroll', 'purple instance');
 
 				animation.addByPrefix('purpleholdend', 'pruple end hold');
 				animation.addByPrefix('greenholdend', 'green hold end');

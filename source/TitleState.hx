@@ -142,7 +142,7 @@ class TitleState extends MusicBeatState
 		logoBl = new FlxSprite(-150, -100);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = true;
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
+		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
@@ -278,7 +278,7 @@ class TitleState extends MusicBeatState
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
 
-		if (pressedEnter && !skippedIntro)
+		if (pressedEnter && !skippedIntro && initialized)
 		{
 			skipIntro();
 		}
@@ -320,7 +320,7 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
-		logoBl.animation.play('bump');
+		logoBl.animation.play('bump', true);
 		danceLeft = !danceLeft;
 
 		if (danceLeft)

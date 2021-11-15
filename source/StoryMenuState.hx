@@ -249,14 +249,9 @@ class StoryMenuState extends MusicBeatState
 			if (!selectedWeek)
 			{
 				if (controls.UP_P)
-				{
 					changeWeek(-1);
-				}
-
 				if (controls.DOWN_P)
-				{
 					changeWeek(1);
-				}
 
 				if (controls.RIGHT)
 					rightArrow.animation.play('press')
@@ -275,9 +270,7 @@ class StoryMenuState extends MusicBeatState
 			}
 
 			if (controls.ACCEPT)
-			{
 				selectWeek();
-			}
 		}
 
 		if (controls.BACK && !movedBack && !selectedWeek)

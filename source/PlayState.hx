@@ -1413,7 +1413,7 @@ class PlayState extends MusicBeatState
 
 		scoreTxt.text = "Score:" + songScore;
 
-		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
+		if (controls.PAUSE && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
@@ -1603,13 +1603,6 @@ class PlayState extends MusicBeatState
 		{
 			health = 0;
 			trace("RESET = True");
-		}
-
-		// CHEAT = brandon's a pussy
-		if (controls.CHEAT)
-		{
-			health += 1;
-			trace("User is cheating!");
 		}
 
 		if (health <= 0 && !practiceMode)
@@ -2176,9 +2169,7 @@ class PlayState extends MusicBeatState
 		if (keyP)
 			goodNoteHit(note);
 		else
-		{
 			badNoteCheck();
-		}
 	}
 
 	function goodNoteHit(note:Note):Void

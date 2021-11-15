@@ -209,18 +209,10 @@ class FreeplayState extends MusicBeatState
 
 		// positionHighscore();
 
-		var upP = controls.UP_P;
-		var downP = controls.DOWN_P;
-		var accepted = controls.ACCEPT;
-
-		if (upP)
-		{
+		if (controls.UP_P)
 			changeSelection(-1);
-		}
-		if (downP)
-		{
+		if (controls.DOWN_P)
 			changeSelection(1);
-		}
 
 		if (controls.LEFT_P)
 			changeDiff(-1);
@@ -228,11 +220,9 @@ class FreeplayState extends MusicBeatState
 			changeDiff(1);
 
 		if (controls.BACK)
-		{
 			FlxG.switchState(new MainMenuState());
-		}
 
-		if (accepted)
+		if (controls.ACCEPT)
 		{
 			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 

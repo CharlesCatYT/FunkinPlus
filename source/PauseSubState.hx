@@ -165,12 +165,6 @@ class PauseSubState extends MusicBeatSubstate
 					regenMenu();
 			}
 		}
-
-		if (FlxG.keys.justPressed.J)
-		{
-			// for reference later!
-			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
-		}
 	}
 
 	override function destroy()

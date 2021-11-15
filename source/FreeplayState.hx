@@ -203,7 +203,7 @@ class FreeplayState extends MusicBeatState
 		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.4);
 
 		// TODO: transition between the colors just like 0.2.8 (CoolUtil.camLerpShit(0.045))
-		FlxTween.color(bg, 0.45, bg.color, coolColors[songs[curSelected].week % coolColors.length]);
+		FlxTween.color(bg, 0.045, bg.color, coolColors[songs[curSelected].week % coolColors.length]);
 
 		scoreText.text = "PERSONAL BEST:" + Math.round(lerpScore);
 

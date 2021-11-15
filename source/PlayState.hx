@@ -90,6 +90,7 @@ class PlayState extends MusicBeatState
 
 	private var generatedMusic:Bool = false;
 	private var startingSong:Bool = false;
+	private var vocalsFinished:Bool = false;
 
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
@@ -1083,6 +1084,11 @@ class PlayState extends MusicBeatState
 		else
 			vocals = new FlxSound();
 
+		vocals.onComplete = function()
+		{
+			vocalsFinished = true;
+		}
+
 		FlxG.sound.list.add(vocals);
 
 		notes = new FlxTypedGroup<Note>();
@@ -1356,10 +1362,16 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals():Void
 	{
-		vocals.pause();
+		if (_exiting)
+			return;
 
+		vocals.pause();
 		FlxG.sound.music.play();
 		Conductor.songPosition = FlxG.sound.music.time;
+
+		if (vocalsFinished)
+			return;
+
 		vocals.time = Conductor.songPosition;
 		vocals.play();
 	}
@@ -2306,14 +2318,13 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
+
+		// can be formatted better; currently just copy-pasted from compiled js with fixes to compile
+		if (20 < Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset))
+			|| SONG.needsVoices
+			&& 20 < Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)))
 		{
 			resyncVocals();
-		}
-
-		if (dad.curCharacter == 'spooky' && curStep % 4 == 2)
-		{
-			// dad.dance();
 		}
 	}
 
@@ -2383,8 +2394,11 @@ class PlayState extends MusicBeatState
 
 		if (curBeat % 16 == 15 && SONG.song == 'Tutorial' && dad.curCharacter == 'gf' && curBeat > 16 && curBeat < 48)
 		{
-			boyfriend.playAnim('hey', true);
-			dad.playAnim('cheer', true);
+			if (vocals.volume != 0)
+			{
+				boyfriend.playAnim('hey', true);
+				dad.playAnim('cheer', true);
+			}
 		}
 
 		switch (curStage)

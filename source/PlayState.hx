@@ -2263,8 +2263,7 @@ class PlayState extends MusicBeatState
 	function trainStart():Void
 	{
 		trainMoving = true;
-		if (!trainSound.playing)
-			trainSound.play(true);
+		trainSound.play(true);
 	}
 
 	var startedMoving:Bool = false;

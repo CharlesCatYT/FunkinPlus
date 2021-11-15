@@ -96,6 +96,8 @@ class PlayState extends MusicBeatState
 	private var camHUD:FlxCamera;
 	private var camGame:FlxCamera;
 
+	var grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
+
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 
 	var halloweenBG:FlxSprite;
@@ -150,6 +152,10 @@ class PlayState extends MusicBeatState
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
+
+		var tempNoteSplash = new NoteSplash(0, 0, 0);
+		grpNoteSplashes.add(tempNoteSplash);
+		tempNoteSplash.alpha = 0.1;
 
 		FlxCamera.defaultCameras = [camGame];
 
@@ -705,6 +711,8 @@ class PlayState extends MusicBeatState
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
 		add(strumLineNotes);
 
+		add(grpNoteSplashes);
+
 		playerStrums = new FlxTypedGroup<FlxSprite>();
 
 		// startCountdown();
@@ -759,6 +767,7 @@ class PlayState extends MusicBeatState
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 
+		grpNoteSplashes.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
@@ -1817,9 +1826,9 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	private function popUpScore(strumtime:Float):Void
+	private function popUpScore(daNote:Note):Void
 	{
-		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
+		var noteDiff:Float = Math.abs(daNote.strumTime - Conductor.songPosition);
 		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
 
@@ -1849,6 +1858,13 @@ class PlayState extends MusicBeatState
 		{
 			daRating = 'good';
 			score = 200;
+		}
+
+		if (daRating == 'sick')
+		{
+			var daNoteSplash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+			daNoteSplash.setupNoteSplash(daNote.x, strumLine.y, daNote.noteData);
+			grpNoteSplashes.add(daNoteSplash);
 		}
 
 		if (!practiceMode)
@@ -2173,7 +2189,7 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				combo += 1;
-				popUpScore(note.strumTime);
+				popUpScore(note);
 			}
 
 			if (note.noteData >= 0)

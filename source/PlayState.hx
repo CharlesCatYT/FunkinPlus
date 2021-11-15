@@ -986,6 +986,8 @@ class PlayState extends MusicBeatState
 
 					if (curStage.startsWith('school'))
 						ready.setGraphicSize(Std.int(ready.width * daPixelZoom));
+					else
+						ready.antialiasing = true;
 
 					ready.screenCenter();
 					add(ready);
@@ -1003,6 +1005,8 @@ class PlayState extends MusicBeatState
 
 					if (curStage.startsWith('school'))
 						set.setGraphicSize(Std.int(set.width * daPixelZoom));
+					else
+						set.antialiasing = true;
 
 					set.screenCenter();
 					add(set);
@@ -1020,6 +1024,8 @@ class PlayState extends MusicBeatState
 
 					if (curStage.startsWith('school'))
 						go.setGraphicSize(Std.int(go.width * daPixelZoom));
+					else
+						go.antialiasing = true;
 
 					go.updateHitbox();
 

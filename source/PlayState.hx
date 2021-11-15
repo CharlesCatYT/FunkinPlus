@@ -806,7 +806,6 @@ class PlayState extends MusicBeatState
 						new FlxTimer().start(0.8, function(tmr:FlxTimer)
 						{
 							camHUD.visible = true;
-							remove(blackScreen);
 							FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
 								ease: FlxEase.quadInOut,
 								onComplete: function(twn:FlxTween)
@@ -856,6 +855,7 @@ class PlayState extends MusicBeatState
 		senpaiEvil.scrollFactor.set();
 		senpaiEvil.updateHitbox();
 		senpaiEvil.screenCenter();
+		senpaiEvil.x += senpaiEvil.width / 5;
 
 		if (SONG.song.toLowerCase() == 'roses' || SONG.song.toLowerCase() == 'thorns')
 		{
@@ -863,6 +863,7 @@ class PlayState extends MusicBeatState
 
 			if (SONG.song.toLowerCase() == 'thorns')
 			{
+				camHUD.visible = false;
 				add(red);
 			}
 		}
@@ -899,6 +900,7 @@ class PlayState extends MusicBeatState
 								{
 									remove(senpaiEvil);
 									remove(red);
+									camHUD.visible = true;
 									FlxG.camera.fade(FlxColor.WHITE, 0.01, true, function()
 									{
 										add(dialogueBox);

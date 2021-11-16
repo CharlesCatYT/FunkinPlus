@@ -2378,7 +2378,7 @@ class PlayState extends MusicBeatState
 			gf.dance();
 		}
 
-		if (curBeat % 8 == 7 && curSong == 'Bopeebo')
+		if (curBeat % 8 == 7 && curSong == 'Bopeebo' && curBeat != 79 && curBeat < 128)
 		{
 			boyfriend.playAnim('hey', true);
 		}

@@ -37,6 +37,9 @@ class OptionsSubState extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
+		if (controls.BACK)
+			FlxG.switchState(new MainMenuState());
+
 		if (controls.UP_P)
 			curSelected -= 1;
 

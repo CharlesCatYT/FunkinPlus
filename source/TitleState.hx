@@ -1,5 +1,7 @@
 package;
 
+import shaderslmfao.BuildingShaders;
+import shaderslmfao.ColorSwap;
 #if desktop
 import Discord.DiscordClient;
 import sys.thread.Thread;
@@ -39,6 +41,8 @@ class TitleState extends MusicBeatState
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
 
+	// var swagShader:ColorSwap;
+	// var alphaShader:BuildingShaders;
 	var curWacky:Array<String> = [];
 
 	var wackyImage:FlxSprite;
@@ -144,6 +148,7 @@ class TitleState extends MusicBeatState
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
+		// logoBl.shader = swagShader.shader;
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
@@ -154,6 +159,7 @@ class TitleState extends MusicBeatState
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		gfDance.antialiasing = true;
 		add(gfDance);
+		// gfDance.shader = swagShader.shader;
 		add(logoBl);
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
@@ -269,6 +275,13 @@ class TitleState extends MusicBeatState
 		{
 			skipIntro();
 		}
+
+		/*
+			if (controls.LEFT)
+				swagShader.update(.1 * -elapsed);
+			if (controls.RIGHT)
+				swagShader.update(.1 * elapsed);
+		 */
 
 		super.update(elapsed);
 	}

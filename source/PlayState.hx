@@ -947,6 +947,8 @@ class PlayState extends MusicBeatState
 			else if (dad.curCharacter == 'spooky')
 				dad.dance();
 
+			stageUpdate();
+
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 			introAssets.set('default', ['ready', "set", "go"]);
 			introAssets.set('school', ['weeb/pixelUI/ready-pixel', 'weeb/pixelUI/set-pixel', 'weeb/pixelUI/date-pixel']);
@@ -1058,6 +1060,8 @@ class PlayState extends MusicBeatState
 			boyfriend.dance();
 		if (!dad.animation.curAnim.name.startsWith("sing"))
 			dad.dance();
+
+		stageUpdate(true);
 
 		#if desktop
 		// Song duration in a float, useful for the time left feature
@@ -2306,6 +2310,59 @@ class PlayState extends MusicBeatState
 		gf.playAnim('scared', true);
 	}
 
+	function stageUpdate(songStarted:Bool = false):Void
+	{
+		switch (curStage)
+		{
+			case 'spooky':
+				if (songStarted && isHalloween && FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
+					lightningStrikeShit();
+
+			case 'philly':
+				if (songStarted)
+				{
+					if (!trainMoving)
+						trainCooldown += 1;
+
+					if (curBeat % 4 == 0)
+					{
+						phillyCityLights.forEach(function(light:FlxSprite)
+						{
+							light.visible = false;
+						});
+
+						curLight = FlxG.random.int(0, phillyCityLights.length - 1);
+
+						phillyCityLights.members[curLight].visible = true;
+						// phillyCityLights.members[curLight].alpha = 1;
+					}
+
+					if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
+					{
+						trainCooldown = FlxG.random.int(-4, 0);
+						trainStart();
+					}
+				}
+
+			case 'limo':
+				grpLimoDancers.forEach(function(dancer:BackgroundDancer)
+				{
+					dancer.dance();
+				});
+
+				if (FlxG.random.bool(10) && fastCarCanDrive && songStarted)
+					fastCarDrive();
+
+			case 'mall':
+				upperBoppers.animation.play('bop', true);
+				bottomBoppers.animation.play('bop', true);
+				santa.animation.play('idle', true);
+
+			case 'school':
+				bgGirls.dance();
+		}
+	}
+
 	override function stepHit()
 	{
 		super.stepHit();
@@ -2392,52 +2449,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		switch (curStage)
-		{
-			case 'school':
-				bgGirls.dance();
-
-			case 'mall':
-				upperBoppers.animation.play('bop', true);
-				bottomBoppers.animation.play('bop', true);
-				santa.animation.play('idle', true);
-
-			case 'limo':
-				grpLimoDancers.forEach(function(dancer:BackgroundDancer)
-				{
-					dancer.dance();
-				});
-
-				if (FlxG.random.bool(10) && fastCarCanDrive)
-					fastCarDrive();
-			case "philly":
-				if (!trainMoving)
-					trainCooldown += 1;
-
-				if (curBeat % 4 == 0)
-				{
-					phillyCityLights.forEach(function(light:FlxSprite)
-					{
-						light.visible = false;
-					});
-
-					curLight = FlxG.random.int(0, phillyCityLights.length - 1);
-
-					phillyCityLights.members[curLight].visible = true;
-					// phillyCityLights.members[curLight].alpha = 1;
-				}
-
-				if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
-				{
-					trainCooldown = FlxG.random.int(-4, 0);
-					trainStart();
-				}
-		}
-
-		if (isHalloween && FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
-		{
-			lightningStrikeShit();
-		}
+		stageUpdate(true);
 	}
 
 	var curLight:Int = 0;

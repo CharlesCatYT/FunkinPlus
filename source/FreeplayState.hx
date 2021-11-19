@@ -305,11 +305,12 @@ class FreeplayState extends MusicBeatState
 
 	function positionHighscore()
 	{
+		// TODO: figure out why this isn't calculating correctly
 		scoreText.x = FlxG.width - scoreText.width - 6;
 		scoreBG.scale.x = FlxG.width - scoreText.x + 6;
 		scoreBG.x = FlxG.width - scoreBG.scale.x / 2;
-		diffText.x = scoreBG.x + scoreBG.width / 2;
-		diffText.x = diffText.x - diffText.width / 2;
+		diffText.x = Std.int(scoreBG.x + scoreBG.width / 2);
+		diffText.x -= diffText.width / 2;
 	}
 }
 

@@ -128,7 +128,7 @@ class FreeplayState extends MusicBeatState
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 		// scoreText.alignment = RIGHT;
 
-		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
+		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
@@ -202,12 +202,11 @@ class FreeplayState extends MusicBeatState
 
 		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.4);
 
-		// TODO: transition between the colors just like 0.2.8 (CoolUtil.camLerpShit(0.045))
-		FlxTween.color(bg, 0.045, bg.color, coolColors[songs[curSelected].week % coolColors.length]);
+		bg.color = FlxColor.interpolate(bg.color, coolColors[songs[curSelected].week % coolColors.length], CoolUtil.camLerpShit(0.045));
 
 		scoreText.text = "PERSONAL BEST:" + Math.round(lerpScore);
 
-		// positionHighscore();
+		positionHighscore();
 
 		if (controls.UP_P)
 			changeSelection(-1);
@@ -305,7 +304,6 @@ class FreeplayState extends MusicBeatState
 
 	function positionHighscore()
 	{
-		// TODO: figure out why this isn't calculating correctly
 		scoreText.x = FlxG.width - scoreText.width - 6;
 		scoreBG.scale.x = FlxG.width - scoreText.x + 6;
 		scoreBG.x = FlxG.width - scoreBG.scale.x / 2;

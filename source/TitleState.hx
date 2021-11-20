@@ -2,10 +2,6 @@ package;
 
 import shaderslmfao.BuildingShaders;
 import shaderslmfao.ColorSwap;
-#if desktop
-import Discord.DiscordClient;
-import sys.thread.Thread;
-#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -30,6 +26,13 @@ import lime.app.Application;
 import openfl.Assets;
 
 using StringTools;
+
+#if discord_rpc
+import Discord.DiscordClient;
+#end
+#if desktop
+import sys.thread.Thread;
+#end
 
 class TitleState extends MusicBeatState
 {
@@ -97,13 +100,16 @@ class TitleState extends MusicBeatState
 		});
 		#end
 
-		#if desktop
-		DiscordClient.initialize();
-
-		Application.current.onExit.add(function(exitCode)
+		#if discord_rpc
+		if (!initialized)
 		{
-			DiscordClient.shutdown();
-		});
+			DiscordClient.initialize();
+
+			Application.current.onExit.add(function(exitCode)
+			{
+				DiscordClient.shutdown();
+			});
+		}
 		#end
 	}
 

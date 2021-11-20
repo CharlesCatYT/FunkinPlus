@@ -145,6 +145,7 @@ class DialogueBox extends FlxSpriteGroup
 
 	var dialogueOpened:Bool = false;
 	var dialogueStarted:Bool = false;
+	var dialogueEnded:Bool = false;
 
 	override function update(elapsed:Float)
 	{
@@ -175,7 +176,7 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if (PlayerSettings.player1.controls.ACCEPT && dialogueStarted == true)
+		if (PlayerSettings.player1.controls.ACCEPT && dialogueEnded)
 		{
 			remove(dialogue);
 
@@ -214,6 +215,8 @@ class DialogueBox extends FlxSpriteGroup
 				startDialogue();
 			}
 		}
+		else if (PlayerSettings.player1.controls.ACCEPT && dialogueStarted)
+			swagDialogue.skip();
 
 		super.update(elapsed);
 	}
@@ -229,14 +232,15 @@ class DialogueBox extends FlxSpriteGroup
 
 		// swagDialogue.text = ;
 		swagDialogue.resetText(dialogueList[0]);
-		swagDialogue.start(0.04, true);
-
+		swagDialogue.start(0.04);
 		swagDialogue.completeCallback = function()
 		{
 			handSelect.visible = true;
+			dialogueEnded = true;
 		}
 
 		handSelect.visible = false;
+		dialogueEnded = false;
 
 		switch (curCharacter)
 		{

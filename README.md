@@ -31,14 +31,9 @@ First, you need to install Haxe and HaxeFlixel. I'm too lazy to write and keep u
 
 Other installations you'd need are the additional libraries, a fully updated list will be in `Project.xml` in the project root. Currently, these are all of the things you need to install:
 ```
-flixel
-flixel-addons
-flixel-ui
-hscript
-newgrounds
 polymod
 ```
-So for each of those type `haxelib install [library]` so shit like `haxelib install newgrounds`
+So for each of those type `haxelib install [library]` so shit like `haxelib install polymod`
 
 You'll also need to install a couple things that involve Gits. To do this, you need to do a few things first.
 1. Download [git-scm](https://git-scm.com/downloads). Works for Windows, Mac, and Linux, just select your build.

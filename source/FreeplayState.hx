@@ -57,13 +57,13 @@ class FreeplayState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		/* 
-			if (FlxG.sound.music != null)
-			{
-				if (!FlxG.sound.music.playing)
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			}
-		 */
+		#if NO_PRELOAD_ALL
+		if (FlxG.sound.music != null)
+		{
+			if (!FlxG.sound.music.playing)
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		}
+		#end
 
 		#if discord_rpc
 		// Updating Discord Rich Presence

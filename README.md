@@ -20,6 +20,8 @@ This is the repository for Friday Night Funkin' Plus, a modification of the late
 
 This game was made with love to Newgrounds and its community. Extra love to Tom Fulp.
 
+## Build instructions
+
 ### Installing the Required Programs
 
 First, you need to install Haxe and HaxeFlixel. I'm too lazy to write and keep updated with that setup (which is pretty simple). 

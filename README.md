@@ -1,6 +1,6 @@
 # Friday Night Funkin' Plus
 
-This is the repository for Friday Night Funkin' Plus, a modification of the latest source code of Friday Night Funkin' that brings in v0.2.8 features, without Week 7.
+This is the repository for Friday Night Funkin' Plus, a modification of the latest source code of Friday Night Funkin' that brings in v0.2.8 features and improvements, without Week 7.
 
 - View the original source code here: https://github.com/ninjamuffin99/Funkin
 - Play the Ludum Dare prototype here: https://ninja-muffin24.itch.io/friday-night-funkin
@@ -8,15 +8,16 @@ This is the repository for Friday Night Funkin' Plus, a modification of the late
 - Support the original on the itch.io page: https://ninja-muffin24.itch.io/funkin
 - View progress of The Full Ass Game on its Kickstarter page: https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game
 
-## FNF+ Credits
+## Friday Night Funkin' Plus Credits
 
 - [M&M](https://github.com/ActualMandM) - Main Programmer
+- [Netyasha Roozi](https://github.com/NetyashaRoozi) - Ridge (SiIvaGunner Rip)
 
-## OG Credits / shoutouts
+## Friday Night Funkin' Credits / shoutouts
 
-- [ninjamuffin99](https://twitter.com/ninja_muffin99) - Programmer
-- [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art
-- [Kawaisprite](https://twitter.com/kawaisprite) - Musician
+- [ninjamuffin99](https://twitter.com/ninja_muffin99) and [MtH](https://twitter.com/emmnyaa) - Programmer
+- [Phantom Arcade](https://twitter.com/phantomarcade3k) and [evilsk8r](https://twitter.com/evilsk8r) - Art
+- [Kawai Sprite](https://twitter.com/kawaisprite) and [bassetfilms](https://twitter.com/Bassetfilms) - Musician
 
 This game was made with love to Newgrounds and its community. Extra love to Tom Fulp.
 

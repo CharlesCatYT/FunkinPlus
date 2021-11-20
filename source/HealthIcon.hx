@@ -15,6 +15,8 @@ class HealthIcon extends FlxSprite
 	 */
 	public var sprTracker:FlxSprite;
 
+	var pixelIcons:Array<String> = ['bf-pixel', 'senpai', 'spirit'];
+
 	public function new(char:String, ?isPlayer:Bool = false)
 	{
 		super();
@@ -31,17 +33,22 @@ class HealthIcon extends FlxSprite
 
 	public function swapOldIcon()
 	{
-		(isOldIcon = !isOldIcon) ? changeIcon("bf-old") : changeIcon(char);
+		(isOldIcon = !isOldIcon) ? changeIcon('bf-old') : changeIcon(char);
 	}
 
 	public function changeIcon(char:String)
 	{
 		if (char != 'bf-pixel' && char != 'bf-old')
-			char = char.split("-")[0];
+			char = char.split('-')[0];
 
 		loadGraphic(Paths.image('icons/icon-' + char), true, 150, 150);
 		animation.add(char, [0, 1], 0, false, isPlayer);
 		animation.play(char);
+
+		for (pixelChar in pixelIcons)
+		{
+			// antialiasing = (char != pixelChar);
+		}
 	}
 
 	override function update(elapsed:Float)

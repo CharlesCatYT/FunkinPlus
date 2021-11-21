@@ -27,7 +27,6 @@ class HealthIcon extends FlxSprite
 		isPlayer = isOldIcon = false;
 
 		changeIcon(char);
-		antialiasing = true;
 		scrollFactor.set();
 	}
 
@@ -44,6 +43,12 @@ class HealthIcon extends FlxSprite
 		loadGraphic(Paths.image('icons/icon-' + char), true, 150, 150);
 		animation.add(char, [0, 1], 0, false, isPlayer);
 		animation.play(char);
+
+		// TODO: get the for loop below working
+		if (char == 'bf-pixel' || char == 'senpai' || char == 'spirit')
+			antialiasing = false;
+		else
+			antialiasing = true;
 
 		for (pixelChar in pixelIcons)
 		{

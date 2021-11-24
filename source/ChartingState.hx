@@ -550,17 +550,27 @@ class ChartingState extends MusicBeatState
 			PlayState.SONG = _song;
 			FlxG.sound.music.stop();
 			vocals.stop();
+
 			FlxG.switchState(new PlayState());
+		}
+		else if (FlxG.keys.justPressed.ESCAPE)
+		{
+			lastSection = curSection;
+
+			FlxG.mouse.visible = false;
+			FlxG.sound.music.stop();
+			vocals.stop();
+
+			if (PlayState.isStoryMode)
+				FlxG.switchState(new StoryMenuState());
+			else
+				FlxG.switchState(new FreeplayState());
 		}
 
 		if (FlxG.keys.justPressed.E)
-		{
 			changeNoteSustain(Conductor.stepCrochet);
-		}
 		if (FlxG.keys.justPressed.Q)
-		{
 			changeNoteSustain(-Conductor.stepCrochet);
-		}
 
 		if (FlxG.keys.justPressed.TAB)
 		{
@@ -670,7 +680,11 @@ class ChartingState extends MusicBeatState
 			+ " / "
 			+ Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2))
 			+ "\nSection: "
-			+ curSection;
+			+ curSection
+			+ "\nBeat: "
+			+ curBeat
+			+ "\nStep: "
+			+ curStep;
 		super.update(elapsed);
 	}
 

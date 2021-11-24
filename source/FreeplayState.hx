@@ -223,19 +223,27 @@ class FreeplayState extends MusicBeatState
 			FlxG.switchState(new MainMenuState());
 
 		if (controls.ACCEPT)
-		{
-			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+			loadSong();
+		else if (FlxG.keys.justPressed.SEVEN)
+			loadSong(true);
+	}
 
-			trace(poop);
+	function loadSong(charting:Bool = false)
+	{
+		var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 
-			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
+		trace(poop);
 
-			PlayState.storyWeek = songs[curSelected].week;
-			trace('CUR WEEK' + PlayState.storyWeek);
+		PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+		PlayState.isStoryMode = false;
+		PlayState.storyDifficulty = curDifficulty;
+
+		PlayState.storyWeek = songs[curSelected].week;
+		trace('CUR WEEK' + PlayState.storyWeek);
+		if (charting)
+			LoadingState.loadAndSwitchState(new ChartingState());
+		else
 			LoadingState.loadAndSwitchState(new PlayState());
-		}
 	}
 
 	function changeDiff(change:Int = 0)

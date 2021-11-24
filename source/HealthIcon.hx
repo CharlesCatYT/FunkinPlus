@@ -44,15 +44,14 @@ class HealthIcon extends FlxSprite
 		animation.add(char, [0, 1], 0, false, isPlayer);
 		animation.play(char);
 
-		// TODO: get the for loop below working
-		if (char == 'bf-pixel' || char == 'senpai' || char == 'spirit')
-			antialiasing = false;
-		else
-			antialiasing = true;
+		antialiasing = true;
 
 		for (pixelChar in pixelIcons)
 		{
-			// antialiasing = (char != pixelChar);
+			if (char != pixelChar)
+				continue;
+			else
+				antialiasing = false;
 		}
 	}
 

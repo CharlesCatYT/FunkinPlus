@@ -421,7 +421,8 @@ class ChartingState extends MusicBeatState
 					_song.notes[curSection].altAnim = check.checked;
 
 				case "Alt Animation Note":
-					curSelectedNote[3] = check.checked;
+					if (curSelectedNote != null)
+						curSelectedNote[3] = check.checked;
 			}
 		}
 		else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))

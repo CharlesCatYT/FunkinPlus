@@ -55,6 +55,8 @@ class ChartingState extends MusicBeatState
 	var amountSteps:Int = 0;
 	var bullshitUI:FlxGroup;
 
+	public static var lastSong:String = 'Dadbattle';
+
 	var highlight:FlxSprite;
 
 	var GRID_SIZE:Int = 40;
@@ -83,8 +85,6 @@ class ChartingState extends MusicBeatState
 
 	override function create()
 	{
-		curSection = lastSection;
-
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
 
@@ -125,9 +125,11 @@ class ChartingState extends MusicBeatState
 		}
 
 		FlxG.mouse.visible = true;
-		FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		tempBpm = _song.bpm;
+
+		if (_song.song == lastSong)
+			curSection = lastSection;
 
 		addSection();
 
@@ -563,6 +565,7 @@ class ChartingState extends MusicBeatState
 		if (FlxG.keys.justPressed.ENTER)
 		{
 			lastSection = curSection;
+			lastSong = _song.song;
 
 			FlxG.mouse.visible = false;
 			PlayState.SONG = _song;
@@ -574,6 +577,7 @@ class ChartingState extends MusicBeatState
 		else if (FlxG.keys.justPressed.ESCAPE)
 		{
 			lastSection = curSection;
+			lastSong = _song.song;
 
 			FlxG.mouse.visible = false;
 			FlxG.sound.music.stop();

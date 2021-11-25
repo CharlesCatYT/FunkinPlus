@@ -179,7 +179,7 @@ class ChartingState extends MusicBeatState
 		var UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
 		typingShit = UI_songTitle;
 
-		var check_voices = new FlxUICheckBox(10, 25, null, null, "Has voice track", 100);
+		var check_voices = new FlxUICheckBox(10, 30, null, null, "Has voice track", 100);
 		check_voices.checked = _song.needsVoices;
 		// _song.needsVoices = check_voices.checked;
 		check_voices.callback = function()
@@ -225,6 +225,8 @@ class ChartingState extends MusicBeatState
 		stepperBPM.value = Conductor.bpm;
 		stepperBPM.name = 'song_bpm';
 
+		var clearSongButton:FlxButton = new FlxButton(10, 150, "Clear song", clearSong);
+
 		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/characterList'));
 
 		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
@@ -254,6 +256,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(loadAutosaveBtn);
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperSpeed);
+		tab_group_song.add(clearSongButton);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(player2DropDown);
 
@@ -290,7 +293,7 @@ class ChartingState extends MusicBeatState
 			copySection(Std.int(stepperCopy.value));
 		});
 
-		var clearSectionButton:FlxButton = new FlxButton(10, 150, "Clear", clearSection);
+		var clearSectionButton:FlxButton = new FlxButton(10, 150, "Clear section", clearSection);
 
 		var swapSection:FlxButton = new FlxButton(10, 170, "Swap section", function()
 		{
@@ -505,6 +508,13 @@ class ChartingState extends MusicBeatState
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
 
+		if (20 < Math.abs(FlxG.sound.music.time - Conductor.songPosition)
+			|| _song.needsVoices
+			&& 20 < Math.abs(vocals.time - Conductor.songPosition))
+		{
+			resyncVocals();
+		}
+
 		if (FlxG.mouse.justPressed)
 		{
 			if (FlxG.mouse.overlaps(curRenderedNotes))
@@ -693,6 +703,7 @@ class ChartingState extends MusicBeatState
 			+ curBeat
 			+ "\nStep: "
 			+ curStep;
+
 		super.update(elapsed);
 	}
 
@@ -1110,5 +1121,18 @@ class ChartingState extends MusicBeatState
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
 		FlxG.log.error("Problem saving Level data");
+	}
+
+	function resyncVocals():Void
+	{
+		if (_exiting)
+			return;
+
+		vocals.pause();
+		FlxG.sound.music.play();
+		Conductor.songPosition = FlxG.sound.music.time;
+
+		vocals.time = Conductor.songPosition;
+		vocals.play();
 	}
 }

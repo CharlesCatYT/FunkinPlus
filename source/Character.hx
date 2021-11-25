@@ -381,29 +381,38 @@ class Character extends FlxSprite
 
 			// Doesn't flip for BF, since his are already in the right place???
 			if (!curCharacter.startsWith('bf'))
-			{
-				// var animArray
-				var oldRight = animation.getByName('singRIGHT').frames;
-				animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;
-				animation.getByName('singLEFT').frames = oldRight;
-
-				// IF THEY HAVE MISS ANIMATIONS??
-				if (animation.getByName('singRIGHTmiss') != null)
-				{
-					var oldMiss = animation.getByName('singRIGHTmiss').frames;
-					animation.getByName('singRIGHTmiss').frames = animation.getByName('singLEFTmiss').frames;
-					animation.getByName('singLEFTmiss').frames = oldMiss;
-				}
-			}
+				animFlip();
+		}
+		else
+		{
+			// Flip for BF, since his are not in the right place???
+			if (curCharacter.startsWith('bf'))
+				animFlip();
 		}
 	}
 
-	public function quickAnimAdd(Name:String, Prefix:String)
+	function animFlip()
+	{
+		// var animArray
+		var oldRight = animation.getByName('singRIGHT').frames;
+		animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;
+		animation.getByName('singLEFT').frames = oldRight;
+
+		// IF THEY HAVE MISS ANIMATIONS??
+		if (animation.getByName('singRIGHTmiss') != null)
+		{
+			var oldMiss = animation.getByName('singRIGHTmiss').frames;
+			animation.getByName('singRIGHTmiss').frames = animation.getByName('singLEFTmiss').frames;
+			animation.getByName('singLEFTmiss').frames = oldMiss;
+		}
+	}
+
+	function quickAnimAdd(Name:String, Prefix:String)
 	{
 		animation.addByPrefix(Name, Prefix, 24, false);
 	}
 
-	public function loadOffsetFile(character:String)
+	function loadOffsetFile(character:String)
 	{
 		var offset:Array<String> = CoolUtil.coolTextFile(Paths.txt('images/characters/' + character + "Offsets"));
 
@@ -524,7 +533,7 @@ class Character extends FlxSprite
 		}
 	}
 
-	public function addOffset(name:String, x:Float = 0, y:Float = 0)
+	function addOffset(name:String, x:Float = 0, y:Float = 0)
 	{
 		animOffsets[name] = [x, y];
 	}

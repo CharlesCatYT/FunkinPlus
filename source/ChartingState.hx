@@ -576,8 +576,8 @@ class ChartingState extends MusicBeatState
 		}
 		else if (FlxG.keys.justPressed.ESCAPE)
 		{
-			lastSection = curSection;
-			lastSong = _song.song;
+			lastSection = 0;
+			lastSong = "Dadbattle";
 
 			FlxG.mouse.visible = false;
 			FlxG.sound.music.stop();

@@ -293,6 +293,8 @@ class TitleState extends MusicBeatState
 			swagShader.update(.1 * -elapsed);
 		if (controls.RIGHT)
 			swagShader.update(.1 * elapsed);
+		if (controls.RESET)
+			swagShader.reset();
 
 		super.update(elapsed);
 	}

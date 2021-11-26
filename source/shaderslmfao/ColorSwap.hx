@@ -23,6 +23,12 @@ class ColorSwap
 		shader.uTime.value[0] += elapsed;
 		hueShit += elapsed;
 	}
+
+	public function reset():Void
+	{
+		shader.uTime.value[0] = 0;
+		hueShit = 0;
+	}
 }
 
 class ColorSwapShader extends FlxShader

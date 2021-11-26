@@ -16,6 +16,11 @@ class BuildingShaders
 	{
 		shader.alphaShit.value[0] += elapsed;
 	}
+
+	public function reset():Void
+	{
+		shader.alphaShit.value[0] = 0;
+	}
 }
 
 class BuildingShader extends FlxShader

@@ -14,7 +14,7 @@ This is the repository for Friday Night Funkin' Plus, a modification of the late
 - [M&M](https://github.com/ActualMandM) - Main Programmer
 - [Netyasha Roozi](https://github.com/NetyashaRoozi) - Ridge (SiIvaGunner Rip)
 
-## Friday Night Funkin' Credits / shoutouts
+## Friday Night Funkin' Credits / Shoutouts
 
 - [ninjamuffin99](https://twitter.com/ninja_muffin99) and [MtH](https://twitter.com/emmnyaa) - Programmer
 - [Phantom Arcade](https://twitter.com/phantomarcade3k) and [evilsk8r](https://twitter.com/evilsk8r) - Art

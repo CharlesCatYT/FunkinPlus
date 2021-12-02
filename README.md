@@ -2,7 +2,6 @@
 
 This is the repository for Friday Night Funkin' Plus, a modification of the latest source code of Friday Night Funkin' that brings in v0.2.8 features and improvements, without Week 7.
 
-### Links
 - [View the original source code](https://github.com/ninjamuffin99/Funkin)
 - [Play the Ludum Dare prototype](https://ninja-muffin24.itch.io/friday-night-funkin)
 - [Play the Newgrounds version](https://www.newgrounds.com/portal/view/770371)
@@ -28,8 +27,9 @@ This game was made with love to Newgrounds and its community. Extra love to Tom 
 
 You will need to install [Haxe](https://haxe.org/download/), [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/), and [Git](https://git-scm.com/downloads).
 
-You also need to install additional libraries. Currently, these are the things that you need to install:
-```
+You also need to install additional libraries. Currently, these are the things that are required:
+
+```text
 haxelib install polymod
 haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 ```
@@ -37,15 +37,17 @@ haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 You should have everything ready for compiling the game; follow the guide below to continue!
 
 ### Compiling the game
+
 **NOTE: If you see any messages relating to deprecated packages, ignore them. They're just warnings that don't affect compiling.**
 
 Once you have all those installed, it's pretty easy to compile the game. You just need to run `lime test html5 -debug` in the root of the project to build and run the HTML5 version.
 
 To run it on your desktop (Windows, Mac, Linux), it can be a bit more involved. You ***MUST*** be on the platform you are compiling for.
 
-For Windows, you need to install Visual Studio Community 2019. While installing VSC, don't click on any of the options to install workloads. Instead, go to the individual components tab and choose the following:
-* MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)
-* Windows SDK (10.0.17763.0)
+For Windows, you need to install [Visual Studio Community 2022](https://visualstudio.microsoft.com/downloads/). Don't click on any of the options to install workloads. Instead, go to the individual components tab and search up the following:
+
+- MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+- Windows 10 SDK (10.0.19041.0)
 
 Once that is done you can open up a command line in the project's directory and run `lime test windows -debug`.
 
@@ -56,4 +58,5 @@ For Mac, install Xcode and `lime test mac -debug` *should* just work; if not, th
 Once the command finishes (it takes a while, even on a higher end PC), Friday Night Funkin' will boot up automatically.
 
 ### Additional guides
+
 - [Command line basics](https://ninjamuffin99.newgrounds.com/news/post/1090480)

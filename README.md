@@ -14,7 +14,7 @@ This is the repository for Friday Night Funkin' Plus, a modification of the late
 - [M&M](https://github.com/ActualMandM) - Main Programmer
 - [Netyasha Roozi](https://github.com/NetyashaRoozi) - Ridge (SiIvaGunner Rip)
 
-## Friday Night Funkin' Credits / Shoutouts
+## Friday Night Funkin' Credits & Shoutouts
 
 - [ninjamuffin99](https://twitter.com/ninja_muffin99) and [MtH](https://twitter.com/emmnyaa) - Programmer
 - [Phantom Arcade](https://twitter.com/phantomarcade3k) and [evilsk8r](https://twitter.com/evilsk8r) - Art
@@ -44,7 +44,7 @@ Once you have all those installed, it's pretty easy to compile the game. You jus
 To run it on your desktop (Windows, Mac, Linux), it can be a bit more involved. You ***MUST*** be on the platform you are compiling for.
 
 For Windows, you need to install Visual Studio Community 2019. While installing VSC, don't click on any of the options to install workloads. Instead, go to the individual components tab and choose the following:
-* MSVC v142 - VS 2019 C++ x64/x86 build tools
+* MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)
 * Windows SDK (10.0.17763.0)
 
 Once that is done you can open up a command line in the project's directory and run `lime test windows -debug`.

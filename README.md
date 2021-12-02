@@ -23,7 +23,7 @@ This game was made with love to Newgrounds and its community. Extra love to Tom 
 
 ## Build instructions
 
-### Installing the Required Programs
+### Installing the required programs
 
 First, you'll need to install [Haxe](https://haxe.org/download/), [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/), and [Git](https://git-scm.com/downloads).
 
@@ -33,9 +33,9 @@ haxelib install polymod
 haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 ```
 
-You should have everything ready for compiling the game! Follow the guide below to continue!
+You should have everything ready for compiling the game, follow the guide below to continue!
 
-### Compiling game
+### Compiling the game
 NOTE: If you see any messages relating to deprecated packages, ignore them. They're just warnings that don't affect compiling.
 
 Once you have all those installed, it's pretty easy to compile the game. You just need to run `lime test html5 -debug` in the root of the project to build and run the HTML5 version.

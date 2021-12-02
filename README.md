@@ -38,7 +38,7 @@ You should have everything ready for compiling the game! Follow the guide below 
 ### Compiling game
 NOTE: If you see any messages relating to deprecated packages, ignore them. They're just warnings that don't affect compiling.
 
-Once you have all those installed, it's pretty easy to compile the game. You just need to run `lime test html5 -debug` in the root of the project to build and run the HTML5 version. ([ninjamuffin99's command prompt navigation guide](https://ninjamuffin99.newgrounds.com/news/post/1090480))
+Once you have all those installed, it's pretty easy to compile the game. You just need to run `lime test html5 -debug` in the root of the project to build and run the HTML5 version.
 
 To run it on your desktop (Windows, Mac, Linux), it can be a bit more involved. You ***MUST*** be on the platform you are compiling for.
 
@@ -53,3 +53,6 @@ For Linux, you can either compile via WSL 2.0 (Windows) or on a Linux kernel. Yo
 For Mac, install Xcode and `lime test mac -debug` *should* just work; if not, the internet surely has a guide on how to compile Haxe stuff for Mac.
 
 Once the command finishes (it takes a while, even on a higher end PC), Friday Night Funkin' will boot up automatically.
+
+### Additional guides
+- [Command line basics](https://ninjamuffin99.newgrounds.com/news/post/1090480)

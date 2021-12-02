@@ -2,11 +2,12 @@
 
 This is the repository for Friday Night Funkin' Plus, a modification of the latest source code of Friday Night Funkin' that brings in v0.2.8 features and improvements, without Week 7.
 
-- View the original source code here: https://github.com/ninjamuffin99/Funkin
-- Play the Ludum Dare prototype here: https://ninja-muffin24.itch.io/friday-night-funkin
-- Play the Newgrounds version here: https://www.newgrounds.com/portal/view/770371
-- Support the original on the itch.io page: https://ninja-muffin24.itch.io/funkin
-- View progress of The Full Ass Game on its Kickstarter page: https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game
+### Links
+- [View the original source code](https://github.com/ninjamuffin99/Funkin)
+- [Play the Ludum Dare prototype](https://ninja-muffin24.itch.io/friday-night-funkin)
+- [Play the Newgrounds version](https://www.newgrounds.com/portal/view/770371)
+- [Support the original on itch.io](https://ninja-muffin24.itch.io/funkin)
+- [View progress of The Full Ass Game on Kickstarter](https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game)
 
 ## Friday Night Funkin' Plus Credits
 
@@ -25,18 +26,18 @@ This game was made with love to Newgrounds and its community. Extra love to Tom 
 
 ### Installing the required programs
 
-First, you'll need to install [Haxe](https://haxe.org/download/), [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/), and [Git](https://git-scm.com/downloads).
+You will need to install [Haxe](https://haxe.org/download/), [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/), and [Git](https://git-scm.com/downloads).
 
-Other installations you'd need are the additional libraries. Currently, these are all of the things you need to install:
+You also need to install additional libraries. Currently, these are the things that you need to install:
 ```
 haxelib install polymod
 haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 ```
 
-You should have everything ready for compiling the game, follow the guide below to continue!
+You should have everything ready for compiling the game; follow the guide below to continue!
 
 ### Compiling the game
-NOTE: If you see any messages relating to deprecated packages, ignore them. They're just warnings that don't affect compiling.
+**NOTE: If you see any messages relating to deprecated packages, ignore them. They're just warnings that don't affect compiling.**
 
 Once you have all those installed, it's pretty easy to compile the game. You just need to run `lime test html5 -debug` in the root of the project to build and run the HTML5 version.
 

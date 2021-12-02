@@ -2405,12 +2405,12 @@ class PlayState extends MusicBeatState
 			if (curBeat % 2 == 0)
 			{
 				if (!dad.animation.curAnim.name.startsWith('sing'))
-					dad.dance();
+					dad.dance(SONG.notes[Math.floor(curStep / 16)].altAnim);
 				if (!boyfriend.animation.curAnim.name.startsWith('sing'))
 					boyfriend.dance();
 			}
 			else if (dad.curCharacter == 'spooky' && !dad.animation.curAnim.name.startsWith('sing'))
-				dad.dance();
+				dad.dance(SONG.notes[Math.floor(curStep / 16)].altAnim);
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);

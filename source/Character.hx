@@ -447,8 +447,14 @@ class Character extends FlxSprite
 		{
 			if (animation.getByName('idleLoop') != null)
 			{
-				if (!animation.curAnim.name.startsWith('sing') && animation.curAnim.finished)
+				if (animation.curAnim.name == 'idle' && animation.curAnim.finished)
 					playAnim('idleLoop');
+			}
+
+			if (animation.getByName('idleLoop-alt') != null)
+			{
+				if (animation.curAnim.name == 'idle-alt' && animation.curAnim.finished)
+					playAnim('idleLoop-alt');
 			}
 
 			switch (curCharacter)
@@ -467,7 +473,7 @@ class Character extends FlxSprite
 	/**
 	 * FOR GF DANCING SHIT
 	 */
-	public function dance()
+	public function dance(altAnim:Bool = false)
 	{
 		if (!debugMode)
 		{
@@ -478,27 +484,53 @@ class Character extends FlxSprite
 					{
 						danced = !danced;
 
-						if (danced)
-							playAnim('danceRight');
+						if (altAnim)
+						{
+							if (danced)
+								playAnim('danceRight');
+							else
+								playAnim('danceLeft');
+						}
 						else
-							playAnim('danceLeft');
+						{
+							if (danced)
+								playAnim('danceRight-alt');
+							else
+								playAnim('danceLeft-alt');
+						}
 					}
 
 				case 'spooky':
 					danced = !danced;
 
-					if (danced)
-						playAnim('danceRight');
+					if (altAnim)
+					{
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
+					}
 					else
-						playAnim('danceLeft');
+					{
+						if (danced)
+							playAnim('danceRight-alt');
+						else
+							playAnim('danceLeft-alt');
+					}
 				default:
-					playAnim('idle');
+					if (altAnim)
+						playAnim('idle-alt');
+					else
+						playAnim('idle');
 			}
 		}
 	}
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
+		if (AnimName.endsWith('-alt') && animation.getByName(AnimName) == null)
+			AnimName = AnimName.split('-alt')[0];
+
 		animation.play(AnimName, Force, Reversed, Frame);
 
 		var daOffset = animOffsets.get(AnimName);

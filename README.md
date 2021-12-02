@@ -48,7 +48,7 @@ For Windows, you need to install Visual Studio Community 2019. While installing 
 
 Once that is done you can open up a command line in the project's directory and run `lime test windows -debug`.
 
-For Linux, you can either compile via WSL 2.0 (Windows) or on a Linux kernel. You only need to open a terminal in the project directory and run `lime test linux -debug` and then run the executable file in export/release/linux/bin.
+For Linux, you can either compile via WSL 2.0 (Windows) or on a Linux kernel. You only need to open a terminal in the project directory and run `lime test linux -debug`.
 
 For Mac, install Xcode and `lime test mac -debug` *should* just work; if not, the internet surely has a guide on how to compile Haxe stuff for Mac.
 

@@ -469,12 +469,15 @@ class Character extends FlxSprite
 	}
 
 	private var danced:Bool = false;
+	private var altSuffix:String = '';
 
 	/**
 	 * FOR GF DANCING SHIT
 	 */
 	public function dance(altAnim:Bool = false)
 	{
+		altSuffix = (altAnim ? '-alt' : '');
+
 		if (!debugMode)
 		{
 			switch (curCharacter)
@@ -484,44 +487,22 @@ class Character extends FlxSprite
 					{
 						danced = !danced;
 
-						if (altAnim)
-						{
-							if (danced)
-								playAnim('danceRight');
-							else
-								playAnim('danceLeft');
-						}
+						if (danced)
+							playAnim('danceRight' + altSuffix);
 						else
-						{
-							if (danced)
-								playAnim('danceRight-alt');
-							else
-								playAnim('danceLeft-alt');
-						}
+							playAnim('danceLeft' + altSuffix);
 					}
 
 				case 'spooky':
 					danced = !danced;
 
-					if (altAnim)
-					{
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
+					if (danced)
+						playAnim('danceRight' + altSuffix);
 					else
-					{
-						if (danced)
-							playAnim('danceRight-alt');
-						else
-							playAnim('danceLeft-alt');
-					}
+						playAnim('danceLeft' + altSuffix);
+
 				default:
-					if (altAnim)
-						playAnim('idle-alt');
-					else
-						playAnim('idle');
+					playAnim('idle' + altSuffix);
 			}
 		}
 	}
@@ -534,28 +515,21 @@ class Character extends FlxSprite
 		animation.play(AnimName, Force, Reversed, Frame);
 
 		var daOffset = animOffsets.get(AnimName);
+
 		if (animOffsets.exists(AnimName))
-		{
 			offset.set(daOffset[0], daOffset[1]);
-		}
 		else
 			offset.set(0, 0);
 
 		if (curCharacter == 'gf')
 		{
 			if (AnimName == 'singLEFT')
-			{
 				danced = true;
-			}
 			else if (AnimName == 'singRIGHT')
-			{
 				danced = false;
-			}
 
 			if (AnimName == 'singUP' || AnimName == 'singDOWN')
-			{
 				danced = !danced;
-			}
 		}
 	}
 

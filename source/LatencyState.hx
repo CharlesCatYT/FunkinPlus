@@ -6,7 +6,7 @@ import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 
-class LatencyState extends FlxState
+class LatencyState extends MusicBeatState
 {
 	var offsetText:FlxText;
 	var noteGrp:FlxTypedGroup<Note>;
@@ -58,6 +58,12 @@ class LatencyState extends FlxState
 			FlxG.sound.music.stop();
 
 			FlxG.resetState();
+		}
+		else if (FlxG.keys.justPressed.ESCAPE)
+		{
+			FlxG.sound.music.stop();
+
+			FlxG.switchState(new MainMenuState());
 		}
 
 		noteGrp.forEach(function(daNote:Note)

@@ -1340,8 +1340,10 @@ class PlayState extends MusicBeatState
 			if (health > 0)
 			{
 				if (Conductor.songPosition > 0.0)
+				{
 					DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true,
 						songLength - Conductor.songPosition);
+				}
 				else
 					DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 			}

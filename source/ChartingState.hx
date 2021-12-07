@@ -91,8 +91,7 @@ class ChartingState extends MusicBeatState
 	var dadHitsoundEnabled:Bool = false;
 	var bfHitsound:FlxSound = new FlxSound().loadEmbedded(Paths.sound('hitsoundBF'));
 	var dadHitsound:FlxSound = new FlxSound().loadEmbedded(Paths.sound('hitsoundDad'));
-	var bfHitsoundCanPlay:Bool = true;
-	var dadHitsoundCanPlay:Bool = true;
+	var hitArray:Array<Note> = [];
 
 	override function create()
 	{
@@ -542,35 +541,25 @@ class ChartingState extends MusicBeatState
 			{
 				FlxG.overlap(strumLine, note, function(_, _)
 				{
-					if (note.y < strumLine.y)
+					if (!hitArray.contains(note))
 					{
+						hitArray.push(note);
+
 						if (_song.notes[curSection].mustHitSection)
 						{
 							// BF first 4, DAD second 4
-							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && bfHitsoundCanPlay)
-							{
+							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4))
 								bfHitsound.play(true);
-								// bfHitsoundCanPlay = false;
-							}
-							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && dadHitsoundCanPlay)
-							{
+							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3))
 								dadHitsound.play(true);
-								// dadHitsoundCanPlay = false;
-							}
 						}
 						else
 						{
 							// DAD first 4, BF second 4
-							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && dadHitsoundCanPlay)
-							{
+							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4))
 								dadHitsound.play(true);
-								// dadHitsoundCanPlay = false;
-							}
-							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && bfHitsoundCanPlay)
-							{
+							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3))
 								bfHitsound.play(true);
-								// bfHitsoundCanPlay = false;
-							}
 						}
 					}
 				});
@@ -695,6 +684,7 @@ class ChartingState extends MusicBeatState
 				{
 					FlxG.sound.music.pause();
 					vocals.pause();
+					hitArray = [];
 				}
 				else
 				{

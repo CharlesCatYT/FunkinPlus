@@ -536,53 +536,46 @@ class ChartingState extends MusicBeatState
 
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
 
-		/* 
-			curRenderedNotes.forEach(function(note:Note)
+		curRenderedNotes.forEach(function(note:Note)
+		{
+			if (FlxG.sound.music.playing)
 			{
-				if (FlxG.sound.music.playing)
+				FlxG.overlap(strumLine, note, function(_, _)
 				{
-					FlxG.overlap(strumLine, note, function(_, _)
+					if (note.y < strumLine.y)
 					{
-						if (note.y < strumLine.y)
+						if (_song.notes[curSection].mustHitSection)
 						{
-							if (_song.notes[curSection].mustHitSection)
+							// BF first 4, DAD second 4
+							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && bfHitsoundCanPlay)
 							{
-								// BF first 4, DAD second 4
-								if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && bfHitsoundCanPlay)
-								{
-									bfHitsound.play(true);
-									bfHitsoundCanPlay = false;
-								}
-								if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && dadHitsoundCanPlay)
-								{
-									dadHitsound.play(true);
-									dadHitsoundCanPlay = false;
-								}
+								bfHitsound.play(true);
+								// bfHitsoundCanPlay = false;
 							}
-							else
+							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && dadHitsoundCanPlay)
 							{
-								// DAD first 4, BF second 4
-								if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && dadHitsoundCanPlay)
-								{
-									dadHitsound.play(true);
-									dadHitsoundCanPlay = false;
-								}
-								if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && bfHitsoundCanPlay)
-								{
-									bfHitsound.play(true);
-									bfHitsoundCanPlay = false;
-								}
+								dadHitsound.play(true);
+								// dadHitsoundCanPlay = false;
 							}
 						}
 						else
 						{
-							bfHitsoundCanPlay = true;
-							dadHitsoundCanPlay = true;
+							// DAD first 4, BF second 4
+							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && dadHitsoundCanPlay)
+							{
+								dadHitsound.play(true);
+								// dadHitsoundCanPlay = false;
+							}
+							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && bfHitsoundCanPlay)
+							{
+								bfHitsound.play(true);
+								// bfHitsoundCanPlay = false;
+							}
 						}
-					});
-				}
-			});
-		 */
+					}
+				});
+			}
+		});
 
 		if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
 		{

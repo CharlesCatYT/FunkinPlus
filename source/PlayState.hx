@@ -1349,6 +1349,7 @@ class PlayState extends MusicBeatState
 			}
 			#end
 		}
+
 		super.onFocus();
 	}
 

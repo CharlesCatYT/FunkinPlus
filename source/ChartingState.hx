@@ -487,9 +487,9 @@ class ChartingState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		curStep = recalculateSteps();
+		if (FlxG.sound.music != null)
+			Conductor.songPosition = FlxG.sound.music.time;
 
-		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
 
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
@@ -510,13 +510,6 @@ class ChartingState extends MusicBeatState
 
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
-
-		if (20 < Math.abs(FlxG.sound.music.time - Conductor.songPosition)
-			|| _song.needsVoices
-			&& 20 < Math.abs(vocals.time - Conductor.songPosition))
-		{
-			resyncVocals();
-		}
 
 		if (FlxG.mouse.justPressed)
 		{
@@ -725,25 +718,6 @@ class ChartingState extends MusicBeatState
 
 		updateNoteUI();
 		updateGrid();
-	}
-
-	function recalculateSteps():Int
-	{
-		var lastChange:BPMChangeEvent = {
-			stepTime: 0,
-			songTime: 0,
-			bpm: 0
-		}
-		for (i in 0...Conductor.bpmChangeMap.length)
-		{
-			if (FlxG.sound.music.time > Conductor.bpmChangeMap[i].songTime)
-				lastChange = Conductor.bpmChangeMap[i];
-		}
-
-		curStep = lastChange.stepTime + Math.floor((FlxG.sound.music.time - lastChange.songTime) / Conductor.stepCrochet);
-		updateBeat();
-
-		return curStep;
 	}
 
 	function resetSection(songBeginning:Bool = false):Void
@@ -1139,5 +1113,21 @@ class ChartingState extends MusicBeatState
 
 		vocals.time = Conductor.songPosition;
 		vocals.play();
+	}
+
+	override function stepHit()
+	{
+		super.stepHit();
+
+		if ((Math.abs(FlxG.sound.music.time - Conductor.songPosition) > 20)
+			|| (_song.needsVoices && Math.abs(vocals.time - Conductor.songPosition) > 20))
+		{
+			resyncVocals();
+		}
+	}
+
+	override function beatHit()
+	{
+		super.beatHit();
 	}
 }

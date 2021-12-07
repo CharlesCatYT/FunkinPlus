@@ -1311,23 +1311,18 @@ class PlayState extends MusicBeatState
 		if (paused)
 		{
 			if (FlxG.sound.music != null && !startingSong)
-			{
 				resyncVocals();
-			}
 
 			if (!startTimer.finished)
 				startTimer.active = true;
+
 			paused = false;
 
 			#if discord_rpc
 			if (startTimer.finished)
-			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
-			}
 			else
-			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
-			}
 			#end
 		}
 
@@ -1336,20 +1331,22 @@ class PlayState extends MusicBeatState
 
 	override public function onFocus():Void
 	{
-		#if discord_rpc
-		if (health > 0 && !paused)
+		if (!paused)
 		{
-			if (Conductor.songPosition > 0.0)
-			{
-				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
-			}
-			else
-			{
-				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
-			}
-		}
-		#end
+			if (FlxG.sound.music != null && !startingSong)
+				resyncVocals();
 
+			#if discord_rpc
+			if (health > 0)
+			{
+				if (Conductor.songPosition > 0.0)
+					DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true,
+						songLength - Conductor.songPosition);
+				else
+					DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+			}
+			#end
+		}
 		super.onFocus();
 	}
 
@@ -1357,9 +1354,7 @@ class PlayState extends MusicBeatState
 	{
 		#if discord_rpc
 		if (health > 0 && !paused)
-		{
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
-		}
 		#end
 
 		super.onFocusLost();
@@ -1370,15 +1365,23 @@ class PlayState extends MusicBeatState
 		if (_exiting)
 			return;
 
-		vocals.pause();
-		FlxG.sound.music.play();
-		Conductor.songPosition = FlxG.sound.music.time;
+		if (SONG.needsVoices)
+		{
+			vocals.pause();
+			FlxG.sound.music.play();
+			Conductor.songPosition = FlxG.sound.music.time;
 
-		if (vocalsFinished)
-			return;
+			if (vocalsFinished)
+				return;
 
-		vocals.time = Conductor.songPosition;
-		vocals.play();
+			vocals.time = Conductor.songPosition;
+			vocals.play();
+		}
+		else
+		{
+			FlxG.sound.music.play();
+			Conductor.songPosition = FlxG.sound.music.time;
+		}
 	}
 
 	private var paused:Bool = false;
@@ -2371,10 +2374,8 @@ class PlayState extends MusicBeatState
 	{
 		super.stepHit();
 
-		// can be formatted better; currently just copy-pasted from compiled js with fixes to compile
-		if (20 < Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset))
-			|| SONG.needsVoices
-			&& 20 < Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)))
+		if ((Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20)
+			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20))
 		{
 			resyncVocals();
 		}

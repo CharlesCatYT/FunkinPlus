@@ -83,6 +83,8 @@ class ChartingState extends MusicBeatState
 	var leftIcon:HealthIcon;
 	var rightIcon:HealthIcon;
 
+	var metronomeEnabled:Bool = false;
+
 	override function create()
 	{
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
@@ -202,6 +204,13 @@ class ChartingState extends MusicBeatState
 			FlxG.sound.music.volume = vol;
 		};
 
+		var check_metronome = new FlxUICheckBox(10, check_mute_inst.y + 20, null, null, "Metronome", 100);
+		check_metronome.checked = false;
+		check_metronome.callback = function()
+		{
+			metronomeEnabled = check_metronome.checked;
+		};
+
 		var saveButton:FlxButton = new FlxButton(110, 8, "Save", function()
 		{
 			saveLevel();
@@ -252,6 +261,7 @@ class ChartingState extends MusicBeatState
 
 		tab_group_song.add(check_voices);
 		tab_group_song.add(check_mute_inst);
+		tab_group_song.add(check_metronome);
 		tab_group_song.add(saveButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);
@@ -489,6 +499,8 @@ class ChartingState extends MusicBeatState
 	{
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
+
+		vocals.volume = (_song.needsVoices ? 1 : 0);
 
 		_song.song = typingShit.text;
 
@@ -1129,5 +1141,21 @@ class ChartingState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+
+		if (FlxG.sound.music.playing && metronomeEnabled)
+		{
+			if (curBeat % 4 == 0)
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+			else
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+		}
+	}
+
+	override public function onFocus():Void
+	{
+		if (FlxG.sound.music != null && FlxG.sound.music.playing)
+			resyncVocals();
+
+		super.onFocus();
 	}
 }

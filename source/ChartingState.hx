@@ -557,20 +557,6 @@ class ChartingState extends MusicBeatState
 			}
 		});
 
-		if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
-		{
-			trace(curStep);
-			trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
-			trace('DUMBSHIT');
-
-			if (_song.notes[curSection + 1] == null)
-			{
-				addSection();
-			}
-
-			changeSection(curSection + 1, false);
-		}
-
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
 
@@ -1193,6 +1179,18 @@ class ChartingState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+
+		if (FlxG.sound.music.playing && curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
+		{
+			trace(curStep);
+			trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
+			trace('DUMBSHIT');
+
+			if (_song.notes[curSection + 1] == null)
+				addSection();
+
+			changeSection(curSection + 1, false);
+		}
 
 		if (FlxG.sound.music.playing && metronomeEnabled)
 		{

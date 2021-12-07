@@ -85,10 +85,20 @@ class ChartingState extends MusicBeatState
 
 	var metronomeEnabled:Bool = false;
 
+	var bfHitsoundEnabled:Bool = false;
+	var dadHitsoundEnabled:Bool = false;
+	var bfHitsound:FlxSound = new FlxSound().loadEmbedded(Paths.sound('hitsoundBF'));
+	var dadHitsound:FlxSound = new FlxSound().loadEmbedded(Paths.sound('hitsoundDad'));
+	var bfHitsoundCanPlay:Bool = true;
+	var dadHitsoundCanPlay:Bool = true;
+
 	override function create()
 	{
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
+
+		FlxG.sound.list.add(bfHitsound);
+		FlxG.sound.list.add(dadHitsound);
 
 		leftIcon = new HealthIcon('bf');
 		rightIcon = new HealthIcon('dad');
@@ -204,13 +214,6 @@ class ChartingState extends MusicBeatState
 			FlxG.sound.music.volume = vol;
 		};
 
-		var check_metronome = new FlxUICheckBox(10, check_mute_inst.y + 20, null, null, "Metronome", 100);
-		check_metronome.checked = false;
-		check_metronome.callback = function()
-		{
-			metronomeEnabled = check_metronome.checked;
-		};
-
 		var saveButton:FlxButton = new FlxButton(110, 8, "Save", function()
 		{
 			saveLevel();
@@ -255,6 +258,27 @@ class ChartingState extends MusicBeatState
 
 		player2DropDown.selectedLabel = _song.player2;
 
+		var check_metronome = new FlxUICheckBox(10, check_mute_inst.y + 20, null, null, "Metronome", 100);
+		check_metronome.checked = false;
+		check_metronome.callback = function()
+		{
+			metronomeEnabled = check_metronome.checked;
+		};
+
+		var check_bf_hit = new FlxUICheckBox(10, check_metronome.y + 20, null, null, "Hitsound (BF)", 100);
+		check_bf_hit.checked = false;
+		check_bf_hit.callback = function()
+		{
+			bfHitsoundEnabled = check_bf_hit.checked;
+		};
+
+		var check_dad_hit = new FlxUICheckBox(player2DropDown.x, check_bf_hit.y, null, null, "Hitsound (Dad)", 100);
+		check_dad_hit.checked = false;
+		check_dad_hit.callback = function()
+		{
+			dadHitsoundEnabled = check_dad_hit.checked;
+		};
+
 		var tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
 		tab_group_song.add(UI_songTitle);
@@ -262,6 +286,8 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(check_voices);
 		tab_group_song.add(check_mute_inst);
 		tab_group_song.add(check_metronome);
+		tab_group_song.add(check_bf_hit);
+		tab_group_song.add(check_dad_hit);
 		tab_group_song.add(saveButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);
@@ -505,6 +531,52 @@ class ChartingState extends MusicBeatState
 		_song.song = typingShit.text;
 
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
+
+		curRenderedNotes.forEach(function(note:Note)
+		{
+			if (FlxG.sound.music.playing)
+			{
+				FlxG.overlap(strumLine, note, function(_, _)
+				{
+					if (note.y < strumLine.y)
+					{
+						if (_song.notes[curSection].mustHitSection)
+						{
+							// BF first 4, DAD second 4
+							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && bfHitsoundCanPlay)
+							{
+								bfHitsound.play(true);
+								bfHitsoundCanPlay = false;
+							}
+							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && dadHitsoundCanPlay)
+							{
+								dadHitsound.play(true);
+								dadHitsoundCanPlay = false;
+							}
+						}
+						else
+						{
+							// DAD first 4, BF second 4
+							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && dadHitsoundCanPlay)
+							{
+								dadHitsound.play(true);
+								dadHitsoundCanPlay = false;
+							}
+							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && bfHitsoundCanPlay)
+							{
+								bfHitsound.play(true);
+								bfHitsoundCanPlay = false;
+							}
+						}
+					}
+					else
+					{
+						bfHitsoundCanPlay = true;
+						dadHitsoundCanPlay = true;
+					}
+				});
+			}
+		});
 
 		if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
 		{
@@ -1145,9 +1217,9 @@ class ChartingState extends MusicBeatState
 		if (FlxG.sound.music.playing && metronomeEnabled)
 		{
 			if (curBeat % 4 == 0)
-				FlxG.sound.play(Paths.sound('confirmMenu'));
+				FlxG.sound.play(Paths.sound('metronomeBar'));
 			else
-				FlxG.sound.play(Paths.sound('scrollMenu'));
+				FlxG.sound.play(Paths.sound('metronomeBeat'));
 		}
 	}
 

@@ -84,6 +84,8 @@ class ChartingState extends MusicBeatState
 	var rightIcon:HealthIcon;
 
 	var metronomeEnabled:Bool = false;
+	var metronomeBar:FlxSound = new FlxSound().loadEmbedded(Paths.sound('metronomeBar'));
+	var metronomeBeat:FlxSound = new FlxSound().loadEmbedded(Paths.sound('metronomeBeat'));
 
 	var bfHitsoundEnabled:Bool = false;
 	var dadHitsoundEnabled:Bool = false;
@@ -97,6 +99,8 @@ class ChartingState extends MusicBeatState
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
 
+		FlxG.sound.list.add(metronomeBar);
+		FlxG.sound.list.add(metronomeBeat);
 		FlxG.sound.list.add(bfHitsound);
 		FlxG.sound.list.add(dadHitsound);
 
@@ -532,51 +536,53 @@ class ChartingState extends MusicBeatState
 
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
 
-		curRenderedNotes.forEach(function(note:Note)
-		{
-			if (FlxG.sound.music.playing)
+		/* 
+			curRenderedNotes.forEach(function(note:Note)
 			{
-				FlxG.overlap(strumLine, note, function(_, _)
+				if (FlxG.sound.music.playing)
 				{
-					if (note.y < strumLine.y)
+					FlxG.overlap(strumLine, note, function(_, _)
 					{
-						if (_song.notes[curSection].mustHitSection)
+						if (note.y < strumLine.y)
 						{
-							// BF first 4, DAD second 4
-							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && bfHitsoundCanPlay)
+							if (_song.notes[curSection].mustHitSection)
 							{
-								bfHitsound.play(true);
-								bfHitsoundCanPlay = false;
+								// BF first 4, DAD second 4
+								if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && bfHitsoundCanPlay)
+								{
+									bfHitsound.play(true);
+									bfHitsoundCanPlay = false;
+								}
+								if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && dadHitsoundCanPlay)
+								{
+									dadHitsound.play(true);
+									dadHitsoundCanPlay = false;
+								}
 							}
-							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && dadHitsoundCanPlay)
+							else
 							{
-								dadHitsound.play(true);
-								dadHitsoundCanPlay = false;
+								// DAD first 4, BF second 4
+								if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && dadHitsoundCanPlay)
+								{
+									dadHitsound.play(true);
+									dadHitsoundCanPlay = false;
+								}
+								if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && bfHitsoundCanPlay)
+								{
+									bfHitsound.play(true);
+									bfHitsoundCanPlay = false;
+								}
 							}
 						}
 						else
 						{
-							// DAD first 4, BF second 4
-							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4) && dadHitsoundCanPlay)
-							{
-								dadHitsound.play(true);
-								dadHitsoundCanPlay = false;
-							}
-							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3) && bfHitsoundCanPlay)
-							{
-								bfHitsound.play(true);
-								bfHitsoundCanPlay = false;
-							}
+							bfHitsoundCanPlay = true;
+							dadHitsoundCanPlay = true;
 						}
-					}
-					else
-					{
-						bfHitsoundCanPlay = true;
-						dadHitsoundCanPlay = true;
-					}
-				});
-			}
-		});
+					});
+				}
+			});
+		 */
 
 		if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
 		{
@@ -1217,9 +1223,9 @@ class ChartingState extends MusicBeatState
 		if (FlxG.sound.music.playing && metronomeEnabled)
 		{
 			if (curBeat % 4 == 0)
-				FlxG.sound.play(Paths.sound('metronomeBar'));
+				metronomeBar.play(true);
 			else
-				FlxG.sound.play(Paths.sound('metronomeBeat'));
+				metronomeBeat.play(true);
 		}
 	}
 

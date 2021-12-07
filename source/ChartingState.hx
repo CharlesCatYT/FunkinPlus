@@ -84,24 +84,15 @@ class ChartingState extends MusicBeatState
 	var rightIcon:HealthIcon;
 
 	var metronomeEnabled:Bool = false;
-	var metronomeBar:FlxSound = new FlxSound().loadEmbedded(Paths.sound('metronomeBar'));
-	var metronomeBeat:FlxSound = new FlxSound().loadEmbedded(Paths.sound('metronomeBeat'));
 
 	var bfHitsoundEnabled:Bool = false;
 	var dadHitsoundEnabled:Bool = false;
-	var bfHitsound:FlxSound = new FlxSound().loadEmbedded(Paths.sound('hitsoundBF'));
-	var dadHitsound:FlxSound = new FlxSound().loadEmbedded(Paths.sound('hitsoundDad'));
 	var hitArray:Array<Note> = [];
 
 	override function create()
 	{
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
-
-		FlxG.sound.list.add(metronomeBar);
-		FlxG.sound.list.add(metronomeBeat);
-		FlxG.sound.list.add(bfHitsound);
-		FlxG.sound.list.add(dadHitsound);
 
 		leftIcon = new HealthIcon('bf');
 		rightIcon = new HealthIcon('dad');
@@ -549,17 +540,17 @@ class ChartingState extends MusicBeatState
 						{
 							// BF first 4, DAD second 4
 							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4))
-								bfHitsound.play(true);
+								FlxG.sound.play(Paths.sound('hitsoundBF'));
 							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3))
-								dadHitsound.play(true);
+								FlxG.sound.play(Paths.sound('hitsoundDad'));
 						}
 						else
 						{
 							// DAD first 4, BF second 4
 							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4))
-								dadHitsound.play(true);
+								FlxG.sound.play(Paths.sound('hitsoundDad'));
 							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3))
-								bfHitsound.play(true);
+								FlxG.sound.play(Paths.sound('hitsoundBF'));
 						}
 					}
 				});
@@ -1206,9 +1197,9 @@ class ChartingState extends MusicBeatState
 		if (FlxG.sound.music.playing && metronomeEnabled)
 		{
 			if (curBeat % 4 == 0)
-				metronomeBar.play(true);
+				FlxG.sound.play(Paths.sound('metronomeBar'));
 			else
-				metronomeBeat.play(true);
+				FlxG.sound.play(Paths.sound('metronomeBeat'));
 		}
 	}
 

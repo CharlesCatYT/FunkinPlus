@@ -540,17 +540,17 @@ class ChartingState extends MusicBeatState
 						{
 							// BF first 4, DAD second 4
 							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) < 4))
-								FlxG.sound.play(Paths.sound('hitsoundBF'));
+								FlxG.sound.play(Paths.sound('hitsoundBF'), 0.8);
 							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) > 3))
-								FlxG.sound.play(Paths.sound('hitsoundDad'));
+								FlxG.sound.play(Paths.sound('hitsoundDad'), 0.8);
 						}
 						else
 						{
 							// DAD first 4, BF second 4
 							if (dadHitsoundEnabled && ((note.x / GRID_SIZE) < 4))
-								FlxG.sound.play(Paths.sound('hitsoundDad'));
+								FlxG.sound.play(Paths.sound('hitsoundDad'), 0.8);
 							if (bfHitsoundEnabled && ((note.x / GRID_SIZE) > 3))
-								FlxG.sound.play(Paths.sound('hitsoundBF'));
+								FlxG.sound.play(Paths.sound('hitsoundBF'), 0.8);
 						}
 					}
 				});
@@ -1195,9 +1195,9 @@ class ChartingState extends MusicBeatState
 		if (FlxG.sound.music.playing && metronomeEnabled)
 		{
 			if (curBeat % 4 == 0)
-				FlxG.sound.play(Paths.sound('metronomeBar'));
+				FlxG.sound.play(Paths.sound('metronomeBar'), 0.8);
 			else
-				FlxG.sound.play(Paths.sound('metronomeBeat'));
+				FlxG.sound.play(Paths.sound('metronomeBeat'), 0.8);
 		}
 	}
 

@@ -45,4 +45,9 @@ class CoolUtil
 	{
 		return a + camLerpShit(ratio) * (b - a);
 	}
+
+	public static function framerateShit(frames:Float):Float
+	{
+		return 1 / FlxG.elapsed * frames / 60;
+	}
 }

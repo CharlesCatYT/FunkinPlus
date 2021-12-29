@@ -90,6 +90,8 @@ class PlayState extends MusicBeatState
 
 	private var generatedMusic:Bool = false;
 	private var startingSong:Bool = false;
+	private var songStarted:Bool = false;
+	private var endingSong:Bool = false;
 	private var vocalsFinished:Bool = false;
 
 	private var iconP1:HealthIcon;
@@ -1035,7 +1037,7 @@ class PlayState extends MusicBeatState
 
 			swagCounter += 1;
 			// generateSong('fresh');
-		}, 4);
+		}, 5);
 	}
 
 	var previousFrameTime:Int = 0;
@@ -1045,6 +1047,7 @@ class PlayState extends MusicBeatState
 	function startSong():Void
 	{
 		startingSong = false;
+		songStarted = true;
 
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
@@ -1053,13 +1056,6 @@ class PlayState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
-
-		// have them all dance when the song starts
-		gf.dance();
-		if (!boyfriend.animation.curAnim.name.startsWith("sing"))
-			boyfriend.dance();
-		if (!dad.animation.curAnim.name.startsWith("sing"))
-			dad.dance();
 
 		stageUpdate(true);
 
@@ -1750,6 +1746,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
+		endingSong = true;
 		practiceMode = false;
 		seenCutscene = false;
 		deathCounter = 0;
@@ -1829,8 +1826,6 @@ class PlayState extends MusicBeatState
 			FlxG.switchState(new FreeplayState());
 		}
 	}
-
-	var endingSong:Bool = false;
 
 	private function popUpScore(daNote:Note):Void
 	{
@@ -2392,9 +2387,7 @@ class PlayState extends MusicBeatState
 		super.beatHit();
 
 		if (generatedMusic)
-		{
 			notes.sort(FlxSort.byY, FlxSort.DESCENDING);
-		}
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
@@ -2405,16 +2398,6 @@ class PlayState extends MusicBeatState
 			}
 			// else
 			// Conductor.changeBPM(SONG.bpm);
-
-			if (curBeat % 2 == 0)
-			{
-				if (!dad.animation.curAnim.name.startsWith('sing'))
-					dad.dance(SONG.notes[Math.floor(curStep / 16)].altAnim);
-				if (!boyfriend.animation.curAnim.name.startsWith('sing'))
-					boyfriend.dance();
-			}
-			else if (dad.curCharacter == 'spooky' && !dad.animation.curAnim.name.startsWith('sing'))
-				dad.dance(SONG.notes[Math.floor(curStep / 16)].altAnim);
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);
@@ -2438,15 +2421,24 @@ class PlayState extends MusicBeatState
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 
-		if (curBeat % gfSpeed == 0)
+		if (songStarted && !endingSong)
 		{
-			gf.dance();
+			if (curBeat % 2 == 0)
+			{
+				if (!dad.animation.curAnim.name.startsWith('sing'))
+					dad.dance(SONG.notes[Math.floor(curStep / 16)] != null && SONG.notes[Math.floor(curStep / 16)].altAnim);
+				if (!boyfriend.animation.curAnim.name.startsWith('sing'))
+					boyfriend.dance();
+			}
+			else if (dad.curCharacter == 'spooky' && !dad.animation.curAnim.name.startsWith('sing'))
+				dad.dance(SONG.notes[Math.floor(curStep / 16)] != null && SONG.notes[Math.floor(curStep / 16)].altAnim);
+
+			if (curBeat % gfSpeed == 0)
+				gf.dance();
 		}
 
 		if (curBeat % 8 == 7 && curSong == 'Bopeebo' && curBeat != 79 && curBeat < 128)
-		{
 			boyfriend.playAnim('hey', true);
-		}
 
 		if (curBeat % 16 == 15 && SONG.song == 'Tutorial' && dad.curCharacter == 'gf' && curBeat > 16 && curBeat < 48)
 		{

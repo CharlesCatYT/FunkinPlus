@@ -1057,8 +1057,6 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 
-		stageUpdate(true);
-
 		#if discord_rpc
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
@@ -2315,7 +2313,7 @@ class PlayState extends MusicBeatState
 		gf.playAnim('scared', true);
 	}
 
-	function stageUpdate(songStarted:Bool = false):Void
+	function stageUpdate():Void
 	{
 		switch (curStage)
 		{
@@ -2449,7 +2447,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		stageUpdate(true);
+		stageUpdate();
 	}
 
 	var curLight:Int = 0;

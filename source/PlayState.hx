@@ -1744,6 +1744,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
+		songStarted = false;
 		endingSong = true;
 		practiceMode = false;
 		seenCutscene = false;

@@ -44,7 +44,7 @@ class Character extends FlxSprite
 				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				quickAnimAdd('scared', 'GF FEAR');
+				animation.addByPrefix('scared', 'GF FEAR', 24, true);
 
 				loadOffsetFile(curCharacter);
 
@@ -63,7 +63,7 @@ class Character extends FlxSprite
 				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				quickAnimAdd('scared', 'GF FEAR');
+				animation.addByPrefix('scared', 'GF FEAR', 24, true);
 
 				loadOffsetFile(curCharacter);
 
@@ -218,7 +218,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
 				quickAnimAdd('deathConfirm', "BF Dead confirm");
 
-				quickAnimAdd('scared', 'BF idle shaking');
+				animation.addByPrefix('scared', 'BF idle shaking', 24, true);
 
 				loadOffsetFile(curCharacter);
 

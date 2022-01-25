@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxSprite;
+import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 
@@ -40,6 +41,9 @@ class HealthIcon extends FlxSprite
 	{
 		if (!uniqueIcons.contains(char))
 			char = char.split('-')[0];
+
+		if (!OpenFlAssets.exists(Paths.image('icons/icon-' + char)))
+			char = 'face';
 
 		loadGraphic(Paths.image('icons/icon-' + char), true, 150, 150);
 		animation.add(char, [0, 1], 0, false, isPlayer);

@@ -30,6 +30,23 @@ class Character extends FlxSprite
 
 		switch (curCharacter)
 		{
+			// case 'dad':
+			default:
+				// DAD ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('characters/DADDY_DEAREST');
+				frames = tex;
+				quickAnimAdd('idle', 'Dad idle dance');
+				quickAnimAdd('singUP', 'Dad Sing Note UP');
+				quickAnimAdd('singRIGHT', 'Dad Sing Note RIGHT');
+				quickAnimAdd('singDOWN', 'Dad Sing Note DOWN');
+				quickAnimAdd('singLEFT', 'Dad Sing Note LEFT');
+				animation.addByIndices('idleLoop', "Dad idle dance", [11, 12], "", 12, true);
+
+				// loadOffsetFile(curCharacter);
+				loadOffsetFile('dad');
+
+				playAnim('idle');
+
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('characters/GF_assets');
@@ -97,20 +114,6 @@ class Character extends FlxSprite
 				updateHitbox();
 				antialiasing = false;
 
-			case 'dad':
-				// DAD ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/DADDY_DEAREST');
-				frames = tex;
-				quickAnimAdd('idle', 'Dad idle dance');
-				quickAnimAdd('singUP', 'Dad Sing Note UP');
-				quickAnimAdd('singRIGHT', 'Dad Sing Note RIGHT');
-				quickAnimAdd('singDOWN', 'Dad Sing Note DOWN');
-				quickAnimAdd('singLEFT', 'Dad Sing Note LEFT');
-				animation.addByIndices('idleLoop', "Dad idle dance", [11, 12], "", 12, true);
-
-				loadOffsetFile(curCharacter);
-
-				playAnim('idle');
 			case 'spooky':
 				tex = Paths.getSparrowAtlas('characters/spooky_kids_assets');
 				frames = tex;

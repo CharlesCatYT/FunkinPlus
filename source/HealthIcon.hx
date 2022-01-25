@@ -44,15 +44,7 @@ class HealthIcon extends FlxSprite
 		animation.add(char, [0, 1], 0, false, isPlayer);
 		animation.play(char);
 
-		antialiasing = true;
-
-		for (pixelChar in pixelIcons)
-		{
-			if (char != pixelChar)
-				continue;
-			else
-				antialiasing = false;
-		}
+		antialiasing = !pixelIcons.contains(char);
 	}
 
 	override function update(elapsed:Float)

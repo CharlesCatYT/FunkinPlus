@@ -18,19 +18,10 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="1280" height="720" fps="" background="#000000" hardware="true" vsync="false" />
+	<window width="1280" height="720" fps="" background="#000000" hardware="true" orientation="landscape" fullscreen="false" resizable="true" vsync="false" />
 
-	<!--HTML5-specific-->
-	<window if="html5" resizable="true" />
-
-	<!--Desktop-specific-->
-	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
-
-	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
-
-	<!--Switch-specific-->
-	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
+	<!--Mobile/Switch-specific-->
+	<window if="mobile || switch" fullscreen="true" resizable="false" vsync="true" />
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
@@ -42,7 +33,6 @@
 
 	<assets path="assets/preload" rename="assets"/>
 
-	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
 
@@ -80,9 +70,8 @@
 	<assets path="assets/week5" library="week5"/>
 	<assets path="assets/week6" library="week6"/>
 
-	<assets path='example_mods' rename='mods' embed='false'/>
+	<assets path='example_mods' rename='mods' embed='false' if="desktop"/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
-	<!-- <template path='mods' /> -->
 
 	<assets path="CHANGELOG.md" rename='changelog.txt'/>
 	<assets path="LICENSE" rename='license.txt'/>
@@ -105,7 +94,7 @@
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
 	<haxelib name="faxe" if='switch'/>
-	<haxelib name="polymod"/>
+	<haxelib name="polymod" if="desktop"/>
 	<haxelib name="discord_rpc" if="desktop" unless="hl"/>
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
@@ -155,7 +144,6 @@
 	<icon path="art/icon32.png" size='32'/>
 	<icon path="art/icon64.png" size='64'/>
 	<icon path="art/iconOG.png" />
-
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
 

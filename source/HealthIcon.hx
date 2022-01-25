@@ -15,6 +15,7 @@ class HealthIcon extends FlxSprite
 	 */
 	public var sprTracker:FlxSprite;
 
+	var uniqueIcons:Array<String> = ['bf-old', 'bf-pixel'];
 	var pixelIcons:Array<String> = ['bf-pixel', 'senpai', 'spirit'];
 
 	public function new(char:String, ?isPlayer:Bool = false)
@@ -37,7 +38,7 @@ class HealthIcon extends FlxSprite
 
 	public function changeIcon(char:String)
 	{
-		if (char != 'bf-pixel' && char != 'bf-old')
+		if (!uniqueIcons.contains(char))
 			char = char.split('-')[0];
 
 		loadGraphic(Paths.image('icons/icon-' + char), true, 150, 150);

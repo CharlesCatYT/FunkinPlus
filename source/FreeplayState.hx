@@ -10,9 +10,11 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
-import flixel.util.FlxColor;
-import lime.utils.Assets;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
+import lime.app.Future;
+import lime.utils.Assets;
 
 using StringTools;
 
@@ -31,6 +33,8 @@ class FreeplayState extends MusicBeatState
 	var lerpScore:Float = 0;
 	var intendedScore:Int = 0;
 	var bg:FlxSprite;
+
+	var songWait:FlxTimer = new FlxTimer();
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -201,7 +205,7 @@ class FreeplayState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
-		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.4);
+		lerpScore = Math.abs(CoolUtil.coolLerp(lerpScore, intendedScore, 0.4));
 
 		bg.color = FlxColor.interpolate(bg.color, coolColors[songs[curSelected].week % coolColors.length], CoolUtil.camLerpShit(0.045));
 
@@ -283,7 +287,18 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		#if PRELOAD_ALL
-		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+		songWait.cancel();
+
+		if (FlxG.sound.music != null)
+			FlxG.sound.music.stop();
+
+		songWait.start(0.25, function(tmr:FlxTimer)
+		{
+			new Future(() ->
+			{
+				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+			}, true);
+		});
 		#end
 
 		var bullShit:Int = 0;

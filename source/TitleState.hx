@@ -57,6 +57,8 @@ class TitleState extends MusicBeatState
 		#end
 
 		FlxG.game.focusLostFramerate = 60;
+		FlxG.fixedTimestep = false;
+		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
 
 		swagShader = new ColorSwap();
 		alphaShader = new BuildingShaders();

@@ -71,6 +71,7 @@ class PlayState extends MusicBeatState
 	private var strumLine:FlxSprite;
 	private var curSection:Int = 0;
 
+	private var camPos:FlxPoint;
 	private var camFollow:FlxObject;
 
 	private static var prevCamFollow:FlxObject;
@@ -612,7 +613,7 @@ class PlayState extends MusicBeatState
 
 		dad = new Character(100, 100, SONG.player2);
 
-		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
+		camPos = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
 		switch (SONG.player2)
 		{
@@ -852,6 +853,8 @@ class PlayState extends MusicBeatState
 		senpaiEvil.updateHitbox();
 		senpaiEvil.screenCenter();
 		senpaiEvil.x += senpaiEvil.width / 5;
+
+		camFollow.setPosition(camPos.x, camPos.y);
 
 		if (SONG.song.toLowerCase() == 'roses' || SONG.song.toLowerCase() == 'thorns')
 		{

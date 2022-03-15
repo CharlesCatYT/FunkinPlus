@@ -27,8 +27,16 @@ class MusicBeatState extends FlxUIState
 		super.create();
 	}
 
+	var appliedFilters:Bool = false;
+
 	override function update(elapsed:Float)
 	{
+		if (!appliedFilters)
+		{
+			FilterManager.apply();
+			appliedFilters = true;
+		}
+
 		openfl.Lib.current.stage.frameRate = lime.app.Application.current.window.displayMode.refreshRate;
 
 		// everyStep();
